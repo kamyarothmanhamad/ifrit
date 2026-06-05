@@ -88,6 +88,29 @@ git push
 
 ---
 
+## Troubleshooting: "Could not find compiled Open Next config"
+
+If deploy logs show:
+
+```text
+OpenNext project detected, calling `opennextjs-cloudflare deploy`
+ERROR Could not find compiled Open Next config, did you run the build command?
+```
+
+your deployment is running the wrong command (`wrangler deploy`) for a Pages project.
+
+Use one of these fixes:
+
+- Cloudflare Pages (Git integration):
+   - Build command: `npx opennextjs-cloudflare build`
+   - Build output directory: `.open-next/assets`
+   - Do not run `wrangler deploy`.
+- Manual/CLI deploy:
+   - Run `npm run deploy` (or `npm run deploy:cf`) from this repo.
+   - This runs OpenNext build first, then `wrangler pages deploy .open-next/assets`.
+
+---
+
 ## Contact form
 
 The `/api/contact` route runs as a Cloudflare Worker via the OpenNext adapter. It needs `RESEND_API_KEY` set in environment variables. Test it after first deploy by submitting the form and checking your inbox.
